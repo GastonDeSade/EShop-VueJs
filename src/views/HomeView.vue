@@ -2,6 +2,11 @@
   <div class="">
     <div class="">
       <h1 class="">Bienvenue sur EShop</h1>
+      <label class="swap swap-rotate">
+        <input type="checkbox" @click="toggleTheme" />
+        <div class="swap-on">DARKMODE</div>
+        <div class="swap-off">LIGHTMODE</div>
+      </label>
 
       <div v-if="authStore.isAuthenticated" class="authenticated-section">
         <p class="welcome-message">
