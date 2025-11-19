@@ -1,7 +1,7 @@
 <template>
   <div class="hero bg-base-200 h-full flex-1">
-    <div class="hero-content flex-col lg:flex-row-reverse">
-      <div class="text-center lg:text-left">
+    <div class="hero-content flex-col">
+      <div class="text-center">
         <h1 class="text-5xl font-bold">Login now!</h1>
         <p class="py-6">
           Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
