@@ -1,25 +1,25 @@
-<script lang="ts">
-export default {
-  name: 'AppCard',
-}
+<script setup lang="ts">
+import type { Product } from '@/types/product'
+
+const props = defineProps<{ product?: Product }>()
 </script>
+
 <template>
-  <div class="card bg-base-100 w-96 shadow-sm">
-    <figure>
-      <img
-        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-        alt="Shoes"
-      />
+  <div class="card card-sm bg-base-200 max-w-60 shadow">
+    <figure class="hover-gallery">
+      <img :src="props.product ? props.product.image : 'nothing'" />
+      <img :src="props.product ? props.product.image2 : 'nothing'" />
+      <img :src="props.product ? props.product.image3 : 'nothing'" />
+      <img :src="props.product ? props.product.image4 : 'nothing'" />
     </figure>
     <div class="card-body">
-      <h2 class="card-title">Card Title</h2>
+      <h2 class="card-title flex justify-between">
+        {{ props.product ? props.product.name : '????' }}
+        <span class="font-normal">{{ props.product ? `$${props.product.price}` : '$??' }}</span>
+      </h2>
       <p>
-        A card component has a figure, a body part, and inside body there are title and actions
-        parts
+        {{ props.product ? props.product.description : '????' }}
       </p>
-      <div class="card-actions justify-end">
-        <button class="btn btn-primary">Buy Now</button>
-      </div>
     </div>
   </div>
 </template>
