@@ -1,41 +1,33 @@
 <template>
   <div class="">
     <div class="">
-      <h1 class="">Bienvenue sur EShop</h1>
-      <div v-if="authStore.isAuthenticated" class="authenticated-section">
-        <p class="welcome-message">
-          Bonjour, <strong>{{ authStore.user?.email }}</strong> !
-        </p>
-
-        <div class="actions">
-          <button @click="handleLogout" class="btn-secondary">Se déconnecter</button>
-        </div>
-      </div>
-
-      <div v-else class="unauthenticated-section">
-        <p class="info-message">Connectez-vous ou créez un compte pour commencer vos achats</p>
-
-        <div class="actions">
-          <router-link to="/login" class="btn-primary"> Se connecter </router-link>
-          <router-link to="/register" class="btn-secondary"> S'inscrire </router-link>
+      <div class="">
+        <h2 class="text-xl font-bold m-4 flex justify-center">Nos parfums</h2>
+        <div
+          class="grid grid-flow-row justify-items-center align-middle items-center justify-center md:grid-cols-2 xl:grid-cols-3 gap-4"
+        >
+          <Card
+            v-for="(product, index) in products"
+            :key="product.id ?? product.name ?? index"
+            :product="product"
+          />
         </div>
       </div>
     </div>
   </div>
-  <button class="btn">Button</button>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import Card from '@/components/Card.vue'
+import { productService } from '@/services/productService'
+import { ref, onMounted } from 'vue'
+import type { Product } from '@/types/product'
 
-const router = useRouter()
-const authStore = useAuthStore()
+const products = ref<Product[]>([])
 
-const handleLogout = () => {
-  authStore.logout()
-  router.push('/login')
-}
+onMounted(async () => {
+  products.value = await productService.fetchProducts()
+})
 </script>
 
 <style scoped></style>
