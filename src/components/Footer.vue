@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <footer class="footer footer-center p-4 bg-base-200 text-base-content rounded">
+  <footer class="footer footer-center p-4 text-base-content rounded h-full items-center">
     <div>
       <p>© 2024 EShop. Tous droits réservés.</p>
     </div>
