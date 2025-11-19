@@ -68,7 +68,7 @@ watch(theme, (newTheme) => {
       </div>
     </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost text-xl">Eshop</a>
+      <a class="btn btn-ghost text-2xl">Jade</a>
     </div>
     <div class="navbar-end">
       <button class="btn btn-ghost btn-circle">
