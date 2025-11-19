@@ -68,7 +68,7 @@ watch(theme, (newTheme) => {
       </div>
     </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost text-2xl">Jade</a>
+      <router-link to="/" class="btn btn-ghost normal-case text-xl">Jade</router-link>
     </div>
     <div class="navbar-end">
       <button class="btn btn-ghost btn-circle">
