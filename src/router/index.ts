@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/auth'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import ProductView from '@/views/ProductVIew.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,12 @@ const router = createRouter({
       name: 'register',
       component: RegisterView,
       meta: { requiresGuest: true },
+    },
+    {
+      path: '/product/:id',
+      name: 'product',
+      component: ProductView,
+      meta: { requiresAuth: true },
     },
   ],
 })
