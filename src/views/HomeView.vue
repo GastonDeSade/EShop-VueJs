@@ -4,7 +4,7 @@
       <div class="">
         <h2 class="text-xl font-bold m-4 flex justify-center">Nos parfums</h2>
         <div
-          class="grid grid-flow-row justify-items-center align-middle items-center justify-center md:grid-cols-2 xl:grid-cols-3 gap-4"
+          class="grid grid-flow-row justify-items-center align-middle items-center justify-center md:grid-cols-3 xl:grid-cols-4 gap-4"
         >
           <Card
             v-for="(product, index) in products"
