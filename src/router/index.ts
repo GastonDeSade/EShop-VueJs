@@ -4,6 +4,7 @@ import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import ProductView from '@/views/ProductVIew.vue'
+import CartView from '@/views/CartView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,12 +30,17 @@ const router = createRouter({
       path: '/product/:id',
       name: 'product',
       component: ProductView,
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: CartView,
       meta: { requiresAuth: true },
     },
   ],
 })
 
-// Navigation guards
+//Navigation guards
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
 

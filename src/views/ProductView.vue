@@ -43,7 +43,9 @@
           <p class="text-base-content/80 mb-6">{{ product.description }}</p>
 
           <div class="flex items-center gap-3">
-            <button class="btn btn-primary">Ajouter au panier</button>
+            <button @click="addToCart(product.id)" class="btn btn-primary">
+              Ajouter au panier
+            </button>
             <button @click="showAlert" class="btn btn-ghost">Ajouter à la liste de souhaits</button>
           </div>
           <Alert v-if="showingAlert" message="La fonctionnalité n'est pas encore implémentée." />
@@ -73,12 +75,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import type { Product } from '@/types/product'
 import { productService } from '@/services/productService'
 import Card from '@/components/Card.vue'
 import Alert from '@/components/Alert.vue'
+import { useCartStore } from '@/stores/cart'
+import router from '@/router'
 
 const route = useRoute()
 
@@ -96,6 +100,12 @@ function showAlert() {
   setTimeout(() => {
     showingAlert.value = false
   }, 3000)
+}
+function addToCart(productId: string) {
+  const cartStore = useCartStore()
+  cartStore.addToCart(productId)
+  // redirect to cart page
+  router.push({ name: 'cart' })
 }
 
 function getImageUrl(path: string | undefined) {
@@ -121,24 +131,24 @@ const formattedPrice = computed(() => {
   )
 })
 
-onMounted(async () => {
-  const id = String(route.params.id ?? '')
+async function loadProductAndRelated(id: string) {
   if (!id) {
+    product.value = null
     loading.value = false
     return
   }
 
+  loading.value = true
   try {
     product.value = await productService.fetchProductById(id)
     activeImage.value = product.value?.image ?? ''
   } catch (e) {
-    // if product not found, navigate or show message — keep simple and show not found
     console.error(e)
+    product.value = null
   } finally {
     loading.value = false
   }
 
-  // fetch related products
   relatedLoading.value = true
   try {
     const all = await productService.fetchProducts()
@@ -146,10 +156,29 @@ onMounted(async () => {
     relatedProducts.value = all.filter((p) => p.id !== id).slice(0, 8)
   } catch (e) {
     console.error('Erreur récupération produits liés', e)
+    relatedProducts.value = []
   } finally {
     relatedLoading.value = false
   }
+}
+
+onMounted(() => {
+  const id = String(route.params.id ?? '')
+  void loadProductAndRelated(id)
 })
+
+watch(
+  () => route.params.id,
+  (newId, oldId) => {
+    const id = String(newId ?? '')
+    if (!id) {
+      product.value = null
+      return
+    }
+    if (String(oldId ?? '') === id) return
+    void loadProductAndRelated(id)
+  },
+)
 </script>
 
 <style scoped>
