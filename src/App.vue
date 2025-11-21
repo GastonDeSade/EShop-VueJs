@@ -18,10 +18,4 @@
 import { RouterView } from 'vue-router'
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
-// TODO : Product listing page
-// TODO: Product page
-// TODO : Cart page
-// TODO: Checkout page
-// TODO : See all orders page for user
-// TODO : can manage cart (add/remove items, change quantities)
 </script>

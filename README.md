@@ -6,10 +6,22 @@ This template should help get you started developing with Vue 3 in Vite.
 
 [VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
+## TODO
+
+TODO : Product listing page
+TODO: Product page
+TODO : Cart page
+TODO: Checkout page
+TODO : See all orders page for user
+TODO : can manage cart (add/remove items, change quantities)
+todo : icons for cart, orders in header with item counts (daisy indicator)
+todo update menu https://daisyui.com/components/drawer/
+todo : optimize the Cartview to realy use the sotre and dont duplicate data
+
 ## Recommended Browser Setup
 
 - Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
+  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
   - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
 - Firefox:
   - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
