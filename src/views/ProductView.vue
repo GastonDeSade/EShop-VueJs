@@ -11,7 +11,7 @@
           <img
             :src="getImageUrl(activeImage)"
             :alt="product.name"
-            class="w-full h-72 object-cover rounded-lg"
+            class="w-full h-full object-cover rounded-lg"
           />
 
           <div class="flex gap-2 mt-3">
@@ -60,7 +60,7 @@
             <span>Chargement...</span>
           </div>
 
-          <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div v-else class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card v-for="p in relatedProducts" :key="p.id" :product="p" />
             <div v-if="relatedProducts.length === 0" class="text-sm text-muted">
               Aucun autre produit disponible.
@@ -104,7 +104,6 @@ function showAlert() {
 function addToCart(productId: string) {
   const cartStore = useCartStore()
   cartStore.addToCart(productId)
-  // redirect to cart page
   router.push({ name: 'cart' })
 }
 
