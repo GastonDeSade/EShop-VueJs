@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import { SunMoon, Sun } from 'lucide-vue-next'
+import { SunMoon, Sun, ShoppingCart, ListOrdered } from 'lucide-vue-next'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -94,6 +94,12 @@ watch(theme, (newTheme) => {
           <div class="swap-off"><Sun /></div>
         </label>
       </button>
+      <RouterLink class="btn btn-ghost btn-circle" to="/cart">
+        <div class="swap-off"><ShoppingCart /></div>
+      </RouterLink>
+      <RouterLink class="btn btn-ghost btn-circle" to="/order">
+        <div class="swap-off"><ListOrdered /></div>
+      </RouterLink>
     </div>
   </div>
 </template>
