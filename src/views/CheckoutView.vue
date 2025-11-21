@@ -15,10 +15,11 @@
             </tr>
           </table>
           Au total : {{ total }} €
+          {{ useAuthStore().user?.id }}
         </div>
 
         <div>
-          <a class="btn" href="">Valider la commande</a>
+          <button @click="createOrder" class="btn" type="button">Valider la commande</button>
         </div>
       </div>
     </div>
@@ -28,6 +29,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useCartStore } from '@/stores/cart'
+import type { OrderDto } from '@/types/order'
+import { orderService } from '@/services/orderService'
+import { useAuthStore } from '@/stores/auth'
+import router from '@/router'
+import type { OrderUpDTO } from '@/types/order'
 
 const cart = useCartStore()
 const products = ref<any[]>([])
@@ -41,4 +47,41 @@ onMounted(async () => {
   )
   console.log(products.value)
 })
+
+async function createOrder() {
+  const orderDto: OrderDto = {
+    idUser: useAuthStore().user?.id ?? '',
+    orderProducts: products.value.map((item) => ({
+      productId: item.product.id,
+      quantity: item.quantity,
+    })),
+  }
+
+  try {
+    const order: OrderUpDTO = await orderService.createOrder(orderDto)
+    cart.clearCart()
+    // show success to the user first
+    alert('Commande créée avec succès !')
+    // then navigate; await so navigation failures don't get swallowed as order errors
+    try {
+      await router.push({ name: 'order' })
+    } catch (navError) {
+      // navigation failure is non-critical here; log for debugging
+      console.error('Navigation failure after order creation:', navError)
+    }
+  } catch (error) {
+    // Log full error for debugging
+    console.error('Error creating order:', error)
+    // Prepare a readable message for the user
+    const errObj = error as { message?: unknown } | undefined
+    const message =
+      errObj && typeof errObj.message === 'string'
+        ? errObj.message
+        : error && typeof error === 'object'
+          ? JSON.stringify(error)
+          : String(error)
+
+    alert(`Erreur lors de la création de la commande: ${message}`)
+  }
+}
 </script>
