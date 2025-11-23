@@ -52,11 +52,13 @@ watch(theme, (newTheme) => {
     <div class="navbar-center">
       <router-link to="/" class="btn btn-ghost normal-case text-xl">Jade</router-link>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-end" v-if="authStore.isAuthenticated">
       <RouterLink class="btn btn-ghost btn-circle indicator" to="/cart">
-        <span class="indicator-item indicator-start badge bg-primary text-white">{{
-          cartStore.getTotalItems()
-        }}</span>
+        <span
+          v-if="cartStore.getTotalItems() > 0"
+          class="indicator-item indicator-start badge bg-primary text-white"
+          >{{ cartStore.getTotalItems() }}</span
+        >
         <div class="swap-off"><ShoppingCart /></div>
       </RouterLink>
       <RouterLink class="btn btn-ghost btn-circle" to="/order">
