@@ -18,8 +18,17 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  function removeFromCart(productId: string) {
-    items.value = items.value.filter((item) => item.product.id !== productId)
+  async function removeFromCart(productId: string) {
+    const existingItem = items.value.find((item) => item.product.id === productId)
+    if (existingItem) {
+      if (existingItem.quantity > 1) {
+        existingItem.quantity--
+        return
+      }
+      if (existingItem.quantity === 1) {
+        items.value = items.value.filter((item) => item.product.id !== productId)
+      }
+    }
   }
 
   function clearCart() {
