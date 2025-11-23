@@ -1,16 +1,16 @@
 <template>
-  <h1>Liste de vos commandes</h1>
+  <Title title="Mes commandes" />
   <div>
     <div
-      class="grid grid-flow-row justify-items-center align-middle items-center justify-center md:grid-cols-3 xl:grid-cols-4 gap-4"
+      class="grid grid-flow-row justify-items-center align-middle items-center justify-center md:grid-cols-2 xl:grid-cols-3 gap-4"
     >
       <!-- Bouclez sur les commandes et affichez leurs détails -->
       <div v-for="order in orders" :key="order.id" class="card w-96 bg-base-100 shadow-xl">
         <div class="card-body">
-          <h2 class="card-title">Commande #{{ order.id }}</h2>
+          <h2 class="card-title">Commande n°{{ minimizeText(order.id ?? '', 10) }}</h2>
           <p>
             Date de la commande:
-            {{ order.created ? new Date(order.created).toLocaleDateString() : 'N/A' }}
+            {{ order.created ? new Date(order.created).toLocaleDateString('fr-FR') : 'N/A' }}
           </p>
           <div>
             <h3>Produits:</h3>
@@ -41,8 +41,9 @@ import { orderService } from '@/services/orderService'
 import type { Order } from '@/types/order'
 import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import Title from '@/components/Title.vue'
+import { minimizeText } from '@/services/formatService'
 
-// reactive orders exposed to the template
 const orders = ref<Order[]>([])
 const authStore = useAuthStore()
 

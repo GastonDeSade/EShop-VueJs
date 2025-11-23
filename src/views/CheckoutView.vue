@@ -1,27 +1,45 @@
 <template>
-  <div class="">
-    <div class="">
-      <div class="">
-        <h2 class="text-xl font-bold m-4 flex justify-center">Votre commande</h2>
-        <div
-          class="grid grid-flow-row justify-items-center align-middle items-center justify-center md:grid-cols-3 xl:grid-cols-4 gap-4"
-        >
-          <table>
-            <tr v-for="product in products" :key="product.id">
-              <td>{{ product.product.name }}</td>
-              <td>{{ product.product.price }} €</td>
-              <td>Quantité: {{ product.quantity }}</td>
-              <td>Total: {{ product.product.price * product.quantity }} €</td>
-            </tr>
-          </table>
-          Au total : {{ total }} €
-          {{ useAuthStore().user?.id }}
-        </div>
+  <div class="array-page">
+    <Title title="Votre commande" />
+    <table class="table-auto">
+      <thead>
+        <tr>
+          <th class="hidden sm:table-cell">Image</th>
+          <th>Produit</th>
+          <th class="hidden sm:table-cell">Prix</th>
+          <th>Quantité</th>
+          <th>Sous-total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in cart.items" :key="item.product.id">
+          <td class="gap-4 items-center hidden sm:table-cell">
+            <img
+              v-if="item.product.image"
+              :src="item.product.image"
+              :alt="item.product.name"
+              class="thumb"
+            />
+          </td>
+          <td>
+            <div class="font-semibold">{{ item.product.name }}</div>
+          </td>
+          <td class="hidden sm:table-cell">{{ item.product.price }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.product.price * item.quantity }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-        <div>
-          <button @click="createOrder" class="btn" type="button">Valider la commande</button>
-        </div>
-      </div>
+    <div class="flex justify-between items-center gap-4 mt-4">
+      <BoutonLink :class="'white'" :text="'Retour'" :link="'/cart'" />
+      Total <strong> {{ total }}</strong>
+      <BoutonLink
+        :class="'primary'"
+        :text="'Valider la commande'"
+        :link="'#'"
+        @click="createOrder"
+      />
     </div>
   </div>
 </template>
@@ -34,13 +52,15 @@ import { orderService } from '@/services/orderService'
 import { useAuthStore } from '@/stores/auth'
 import router from '@/router'
 import type { OrderUpDTO } from '@/types/order'
+import BoutonLink from '@/components/BoutonLink.vue'
+import Title from '@/components/Title.vue'
+import { minimizeText } from '@/services/formatService'
 
 const cart = useCartStore()
-const products = ref<any[]>([])
+const products = ref(cart.items)
 const total = ref<number>(0)
 
 onMounted(async () => {
-  products.value = await cart.items
   total.value = products.value.reduce(
     (total, item) => total + item.product.price * item.quantity,
     0,
@@ -48,7 +68,7 @@ onMounted(async () => {
   console.log(products.value)
 })
 
-async function createOrder() {
+async function createOrder(): Promise<void> {
   const orderDto: OrderDto = {
     idUser: useAuthStore().user?.id ?? '',
     orderProducts: products.value.map((item) => ({
@@ -60,13 +80,10 @@ async function createOrder() {
   try {
     const order: OrderUpDTO = await orderService.createOrder(orderDto)
     cart.clearCart()
-    // show success to the user first
-    alert('Commande créée avec succès !')
-    // then navigate; await so navigation failures don't get swallowed as order errors
+    alert(`Commande ${minimizeText(order.Id ?? '', 10)} créée avec succès !`)
     try {
       await router.push({ name: 'order' })
     } catch (navError) {
-      // navigation failure is non-critical here; log for debugging
       console.error('Navigation failure after order creation:', navError)
     }
   } catch (error) {
