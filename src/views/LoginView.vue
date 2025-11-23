@@ -2,10 +2,9 @@
   <div class="hero bg-base-200 h-full flex-1">
     <div class="hero-content flex-col">
       <div class="text-center">
-        <h1 class="text-5xl font-bold">Login now!</h1>
+        <h1 class="text-5xl font-bold">Se connecter !</h1>
         <p class="py-6">
-          Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-          exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
+          Merci de vous connecter pour accéder à votre compte et profiter de nos services.
         </p>
       </div>
       <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">

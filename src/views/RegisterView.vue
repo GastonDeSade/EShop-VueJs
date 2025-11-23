@@ -4,8 +4,7 @@
       <div class="text-center">
         <h1 class="text-5xl font-bold">Inscrivez-vous maintenant!</h1>
         <p class="py-6">
-          Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-          exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
+          Créez un compte pour profiter pleinement de nos services et offres exclusives.
         </p>
       </div>
       <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
