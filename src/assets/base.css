@@ -1,0 +1,22 @@
+table {
+  border-collapse: collapse;
+}
+th,
+td,
+tr,
+thead {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.array-page {
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+}
