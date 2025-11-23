@@ -44,9 +44,11 @@
 
           <div class="flex items-center gap-3">
             <button @click="addToCart(product.id)" class="btn btn-primary">
-              Ajouter au panier
+              <Plus />
             </button>
-            <button @click="showAlert" class="btn btn-ghost">Ajouter à la liste de souhaits</button>
+            <button @click="showAlert" class="btn btn-ghost">
+              <Heart />
+            </button>
           </div>
           <Alert v-if="showingAlert" message="La fonctionnalité n'est pas encore implémentée." />
         </div>
@@ -83,6 +85,8 @@ import Card from '@/components/Card.vue'
 import Alert from '@/components/Alert.vue'
 import { useCartStore } from '@/stores/cart'
 import router from '@/router'
+import { Plus } from 'lucide-vue-next'
+import { Heart } from 'lucide-vue-next'
 
 const route = useRoute()
 
