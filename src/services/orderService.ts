@@ -112,8 +112,7 @@ export const orderService = {
   },
 
   async deleteOrder(id: string): Promise<void> {
-    // Manifest: DELETE /api/Orders with id as query parameter
-    const response = await fetch(`${API_BASE_URL}/Orders?id=${encodeURIComponent(id)}`, {
+    const response = await fetch(`${API_BASE_URL}/Orders/${encodeURIComponent(id)}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
